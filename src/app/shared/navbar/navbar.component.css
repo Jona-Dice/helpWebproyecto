@@ -1,0 +1,24 @@
+/* Custom Toast */
+:host ::ng-deep .p-toast-message-custom {
+    background-color: #e1cfe7;
+    border: solid #8a427a;
+    border-width: 0 0 0 6px;
+    color: #2c1e30;
+}
+:host ::ng-deep .p-toast-message-custom .p-toast-icon-close {
+    color: #2c1e30;
+}
+
+/* Si se quiere customizar más alerts, su clase debe llamarse igual que la prop "severity" y crearla */
+:host ::ng-deep .p-toast-message-custom2 {
+    background-color: #e0e0e0;
+    border: solid #000000;
+    border-width: 0 0 0 6px;
+    color: #000000;
+}
+:host ::ng-deep .p-toast-message-custom2 .p-toast-icon-close {
+    color: #000000;
+}
+:host ::ng-deep p-menubarsub {
+    width: 100%;
+}

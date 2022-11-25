@@ -1,0 +1,96 @@
+<div class="block-content h-full">
+    <p-toast></p-toast>
+
+    <div class="card">
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2" (click)="nuevo()"></button>
+                <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+            </ng-template>
+
+            <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Importar" class="mr-2 inline-block"></p-fileUpload>
+            <p-splitButton label="Exportar" [model]="itemExport" icon="pi pi-upload" styleClass="p-button-rounded p-button-help"></p-splitButton>
+            <!-- <ng-template pTemplate="right">
+                <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+            </ng-template> -->
+        </p-toolbar>
+
+        <p-table #dt [value]="paises"
+            [loading]="cargando" [rowHover]="true" [scrollable]="true"
+            [paginator]="true" [rows]="10"
+            [globalFilterFields]="['name','country.name','representative.name','status']"
+            [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="Mostrando del {first} al {last}, de {totalRecords} registros" [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption">
+                <div class="card">
+                    <div class="flex justify-content-between flex-wrap card-container">
+                        <div class="flex align-items-center justify-content-center">Manage Products</div>
+                        <div class="flex align-items-center justify-content-center">
+                            <span class="p-input-icon-right">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th pSortableColumn="name.common">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                    <th>Image</th>
+                    <th pSortableColumn="capital">Capital <p-sortIcon field="category"></p-sortIcon></th>
+                    <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+                    <th colspan="2">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pais>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="pais"></p-tableCheckbox>
+                    </td>
+                    <td>{{pais.name.common}}</td>
+                    <td><img [src]="pais.flags.svg" [alt]="pais.name" width="100" class="shadow-4" /></td>
+                    <td>{{pais.capital}}</td>
+                    <td><p-rating [ngModel]="pais.rating" [readonly]="false" [cancel]="false"></p-rating></td>
+                    <td>
+                        <!-- <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button> -->
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editar(pais)"></button>
+                        <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button> -->
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="eliminar(pais)" ></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    En total: {{paises ? paises.length : 0 }} paises.
+                </div>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <p-dialog [(visible)]="verModal" [style]="{width: '450px'}" header="Agregar/Editar Producto" [modal]="true" styleClass="p-fluid">
+        <form autocomplete="off" [formGroup]="forma" >
+            
+            <div class="field mt-2">
+                <label for="nombre">Nombre</label>
+                <input type="text" pInputText id="nombre" formControlName="nombre" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['nombre'].invalid && forma.controls['nombre'].dirty)}" />
+                <small class="p-error" *ngIf="forma.controls['nombre'].errors">*El nombre es obligatorio</small>
+            </div>
+            <div class="field mt-2">
+                <label for="capital">Capital</label>
+                <input type="text" pInputText id="capital" formControlName="capital" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['capital'].invalid && forma.controls['capital'].dirty)}" />
+                <small class="p-error" *ngIf="forma.controls['capital'].errors">*La capital es obligatoria</small>
+            </div>
+            <span class="p-buttonset">
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="cerrarModal()"></button>
+            </span>
+
+        </form>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div>

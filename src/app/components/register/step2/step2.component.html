@@ -1,0 +1,61 @@
+<p-blockUI [blocked]="blockedDocument"></p-blockUI>
+
+<p-panel>
+    <div class="stepsdemo-content">
+        <p-card>
+            <ng-template pTemplate="title">
+                Paso II
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                Ingresa tu información personal
+            </ng-template>
+            <ng-template pTemplate="content">
+                <form autocomplete="off" [formGroup]="forma" (ngSubmit)="sigPaso()">
+                    <p-fieldset legend="" [toggleable]="true">
+                        <div class="col-12">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <input id="correo" formControlName="correo" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['correo'].touched && forma.controls['correo'].invalid )}"> 
+                                <label for="correo">Correo</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <p-password id="password" formControlName="clave" [toggleMask]="true" promptLabel="Ingresa tu contraseña"
+                                  weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" styleClass="p-password w-full p-component p-inputwrapper p-input-icon-right"
+                                  [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['clave'].touched && forma.controls['clave'].invalid )}">
+                                </p-password>
+                                <label for="password">Clave</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <p-password id="repClave" formControlName="repClave" [feedback]="false" [toggleMask]="true" promptLabel="Ingresa tu contraseña"
+                                    weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte" styleClass="p-password w-full p-component p-inputwrapper p-input-icon-right"
+                                    [ngClass]="{'ng-invalid ng-dirty': forma.controls['repClave'].value !== forma.controls['clave'].value }">
+                                </p-password>
+                                <label for="repClave">Repetir Clave</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <p-inputMask formControlName="telefono" mask="(999) 9999-9999" class="w-full sm:justify-content-start" [style]="{'width':'100%'}" [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['telefono'].touched && forma.controls['telefono'].invalid )}"></p-inputMask>
+                                <label for="telefono">Telefono Trabajo</label>
+                            </span>
+                        </div>
+                        <div class="grid grid-nogutter justify-content-end mt-2">
+                            <p-button label="Siguiente" icon="pi pi-angle-double-right" type="submit"></p-button>
+                        </div>
+                    </p-fieldset>
+                </form>
+            </ng-template>
+            <!-- <ng-template pTemplate="footer">
+                <div class="grid grid-nogutter justify-content-end">
+                    <p-button label="Siguiente" [routerLink]="['/register/step1']" icon="pi pi-angle-right" iconPos="right"></p-button>
+                </div>
+            </ng-template> -->
+        </p-card>
+    </div>
+</p-panel>
+<!-- Toast -->
+<p-toast></p-toast>
+<p-toast key="siguiente" (onClose)="prueba()"></p-toast>

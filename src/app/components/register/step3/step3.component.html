@@ -1,0 +1,67 @@
+<p-blockUI [blocked]="blockedDocument"></p-blockUI>
+<p-panel>
+    <div class="stepsdemo-content">
+        <p-card>
+            <ng-template pTemplate="title">
+                Paso III
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                Confirme la información ingresada
+            </ng-template>
+            <ng-template pTemplate="content">
+                <form autocomplete="off" [formGroup]="forma" (ngSubmit)="sigPaso()">
+                    <p-fieldset legend="" [toggleable]="true">
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <input id="nombres" formControlName="nombres" readonly="readonly" type="text" pInputText class="w-full sm:justify-content-start"> 
+                                <label for="nombres">Tus nombres</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <input id="apellidos" formControlName="apellidos" readonly="readonly" type="text" pInputText class="w-full sm:justify-content-start"> 
+                                <label for="apellidos">Tus apellidos</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <p-inputNumber id="edad" formControlName="edad" [readonly]="true" inputId="withoutgrouping" [useGrouping]="false" [style]="{'width':'100%'}" class="w-full sm:justify-content-start" [showButtons]="false" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+                                <label for="edad">Tu edad</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <input id="correo" formControlName="correo" readonly="readonly" type="text" pInputText class="w-full sm:justify-content-start"> 
+                                <label for="correo">Tu correo</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <input type="password" formControlName="clave" readonly="readonly" [feedback]="false" class="w-full sm:justify-content-start" pPassword />
+                                <label for="password">Tu clave</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start p-input-icon-right">
+                                <i class="pi pi-check-circle successColor"></i>
+                                <p-inputMask formControlName="telefono" [readonly]="true" mask="(999) 9999-9999" class="w-full sm:justify-content-start" [style]="{'width':'100%'}" [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['telefono'].touched && forma.controls['telefono'].invalid )}"></p-inputMask>
+                                <label for="telefono">Telefono Trabajo</label>
+                            </span>
+                        </div>
+                        <div class="grid grid-nogutter justify-content-end mt-2">
+                            <button pButton pRipple type="submit" label="Finalizar" class="p-button-raised p-button-success"></button>
+                        </div>
+                    </p-fieldset>
+                </form>
+            </ng-template>
+        </p-card>
+    </div>
+</p-panel>
+<!-- Toast -->
+<p-toast></p-toast>
+<p-toast key="siguiente" (onClose)="prueba()"></p-toast>

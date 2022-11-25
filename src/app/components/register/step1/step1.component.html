@@ -1,0 +1,48 @@
+<p-blockUI [blocked]="blockedDocument"></p-blockUI>
+<p-panel>
+    <div class="stepsdemo-content">
+        <p-card>
+            <ng-template pTemplate="title">
+                Paso I
+            </ng-template>
+            <ng-template pTemplate="subtitle">
+                Ingresa tu información personal
+            </ng-template>
+            <ng-template pTemplate="content">
+                <form autocomplete="off" [formGroup]="forma" (ngSubmit)="sigPaso()">
+                    <p-fieldset legend="" [toggleable]="true">
+                        <div class="col-12">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <input id="nombres" formControlName="nombres" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['nombres'].touched && forma.controls['nombres'].invalid )}"> 
+                                <label for="nombres">Nombres</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <input id="apellidos" formControlName="apellidos" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': ( forma.controls['apellidos'].touched && forma.controls['apellidos'].invalid )}"> 
+                                <label for="apellidos">Apellidos</label>
+                            </span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <span class="p-float-label flex sm:justify-content-start">
+                                <p-inputNumber id="edad" formControlName="edad" inputId="withoutgrouping" [useGrouping]="false" [style]="{'width':'100%'}" class="w-full sm:justify-content-start" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+                                <label for="edad">Edad</label>
+                            </span>
+                        </div>
+                        <div class="grid grid-nogutter justify-content-end mt-2">
+                            <p-button label="Siguiente" icon="pi pi-angle-double-right" type="submit"></p-button>
+                        </div>
+                    </p-fieldset>
+                </form>
+            </ng-template>
+            <!-- <ng-template pTemplate="footer">
+                <div class="grid grid-nogutter justify-content-end">
+                    <p-button label="Siguiente" [routerLink]="['/register/step1']" icon="pi pi-angle-right" iconPos="right"></p-button>
+                </div>
+            </ng-template> -->
+        </p-card>
+    </div>
+</p-panel>
+<!-- Toast -->
+<p-toast></p-toast>
+<p-toast key="siguiente" (onClose)="prueba()"></p-toast>

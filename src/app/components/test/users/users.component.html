@@ -1,0 +1,96 @@
+
+<div class="block-content h-full">
+    <p-table #dt [value]="empleados"
+        [loading]="loading" [rowHover]="true" [scrollable]="true"
+        [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando del {first} al {last}, de {totalRecords} registros"
+        [globalFilterFields]="['nombres']">
+        <ng-template pTemplate="caption">
+            <div class="card">
+                <div class="flex justify-content-between flex-wrap card-container">
+                    <div class="flex align-items-center justify-content-center">Listado de Empleados</div>
+                    <button type="button" pButton pRipple (click)="verModal=!verModal; agregar='Agregar'; nuevo='Nuevo Empleado';" icon="pi pi-user-plus"class="mr-2" pTooltip="Nuevo empleado" tooltipPosition="bottom"></button>
+                    <div class="flex align-items-center justify-content-center">
+                        <span class="p-input-icon-right">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="nombres">Nombres <p-sortIcon field="nombres"></p-sortIcon></th>
+                <th>Apellidos</th>
+                <th pSortableColumn="tipo_docu">Documento <p-sortIcon field="tipo_docu"></p-sortIcon></th>
+                <th>Área</th>
+                <th>Sub-Área</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-empleado>
+            <tr>
+                <td><span class="p-column-title">Nombres</span>{{empleado.nombres}}</td>
+                <td>{{empleado.apellidos}}</td>
+                <td>{{empleado.tipo_docu}}</td>
+                <td>{{empleado.area}}</td>
+                <td>{{empleado.subarea}}</td>
+                <td><button type="button" pButton pRipple (click)="verModal=!verModal; getById(empleado); agregar='Editar'; nuevo='Editar Empleado'" icon="pi pi-user-edit" class="mr-2 p-button-secondary" pTooltip="Editar empleado" tooltipPosition="bottom"></button>
+                    <button type="button" pButton pRipple (click)="borrarEmpleado(empleado.id)" icon="pi pi-user-minus" class="mr-2 p-button-danger" pTooltip="Eliminar empleado" tooltipPosition="bottom"></button></td>
+                <!-- <td><p *ngFor="let area of empleado.area | keyvalue">{{area.value}}</p></td>
+                <td><p *ngFor="let area of empleado.area | keyvalue">{{area.value}}</p></td> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td class="text-center" style="display: initial;" colspan="5">Sin resultados para mostrar</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<!-- Toast -->
+<p-toast></p-toast>
+<!-- Modal -->
+<p-dialog header="{{nuevo}}" [(visible)]="verModal" [style]="{width: '50vw'}" (onHide)="cleanModal()" [maximizable]="true">
+    <form autocomplete="off" [formGroup]="forma" (ngSubmit)="accionModal()" >
+        <div class="col-12 mt-3">
+            <span class="p-float-label flex sm:justify-content-start">
+                <input id="nombres" formControlName="nombres" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['nombres'].invalid && forma.controls['nombres'].dirty)}"> 
+                <label for="nombres">Nombres</label>
+            </span>
+        </div>
+        <div class="col-12 mt-2">
+            <span class="p-float-label flex sm:justify-content-start">
+                <input id="apellidos" formControlName="apellidos" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['apellidos'].invalid && forma.controls['apellidos'].dirty)}"> 
+                <label for="apellidos">Apellidos</label>
+            </span>
+        </div>
+        <div class="col-12 mt-2">
+            <span class="p-float-label flex sm:justify-content-start">
+                <input id="tipo_docu" formControlName="tipo_docu" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['tipo_docu'].invalid && forma.controls['tipo_docu'].dirty)}"> 
+                <label for="tipo_docu">Documento</label>
+            </span>
+        </div>
+        <div class="col-12 mt-2">
+            <span class="p-float-label flex sm:justify-content-start">
+                <input id="area" formControlName="area" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['area'].invalid && forma.controls['area'].dirty)}"> 
+                <label for="area">Área</label>
+            </span>
+        </div>
+        <div class="col-12 mt-2">
+            <span class="p-float-label flex sm:justify-content-start">
+                <input id="subarea" formControlName="subarea" type="text" pInputText class="w-full sm:justify-content-start" [ngClass]="{'ng-invalid ng-dirty': (forma.controls['subarea'].invalid && forma.controls['subarea'].dirty)}"> 
+                <label for="subarea">Sub-area</label>
+            </span>
+        </div>
+        <input id="idEmp" formControlName="idEmp" type="hidden">
+        <div class="grid mt-2">
+            <button pbutton="" pripple="" type="submit" label="Sign In" icon="pi pi-check-circle" class="p-element p-ripple w-full p-button p-component">
+                <span class="p-button-icon p-button-icon-left pi pi-check-circle" aria-hidden="true"></span>
+                <span class="p-button-label">{{agregar}}</span>
+                <span class="p-ink"></span>
+            </button>
+            <!-- <p-button label="Login" [routerLink]="['/test']" icon="pi pi-user" class="p-element p-ripple w-full p-button-lg"></p-button> -->
+        </div>
+    </form>
+</p-dialog>
